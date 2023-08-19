@@ -7,6 +7,8 @@ import java.util.Objects;
 /**
  * A static utility class that loads a JSON configuration file.
  */
+
+@JsonDeserialize(builder = CrawlerConfiguration.Builder.class)
 public final class ConfigurationLoader {
 
   private final Path path;
@@ -23,10 +25,13 @@ public final class ConfigurationLoader {
    *
    * @return the loaded {@link CrawlerConfiguration}.
    */
-  public CrawlerConfiguration load() {
-    // TODO: Fill in this method.
+  public CrawlerConfiguration load() throws  IOException
+  {
+    // use of jackson ObjectMapper to read from file
+    ObjectMapper objectMapper = new ObjectMapper();
+    return objectMapper.readValue(Files.newBufferedReader(path), CrawlerConfiguration.class);
 
-    return new CrawlerConfiguration.Builder().build();
+
   }
 
   /**
@@ -38,8 +43,11 @@ public final class ConfigurationLoader {
   public static CrawlerConfiguration read(Reader reader) {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(reader);
-    // TODO: Fill in this method
+    //use of jackson ObjectMapper to json from reader
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.readValue(reader, CrawlerConfiguration.class);
 
-    return new CrawlerConfiguration.Builder().build();
+
+
   }
 }
