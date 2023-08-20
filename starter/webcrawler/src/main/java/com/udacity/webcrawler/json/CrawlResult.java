@@ -78,7 +78,8 @@ public final class CrawlResult {
     /**
      * Constructs a {@link CrawlResult} from this builder.
      */
-    public CrawlResult build() {
+    public CrawlResult build()
+    {
       return new CrawlResult(Collections.unmodifiableMap(wordFrequencies), pageCount);
     }
   }

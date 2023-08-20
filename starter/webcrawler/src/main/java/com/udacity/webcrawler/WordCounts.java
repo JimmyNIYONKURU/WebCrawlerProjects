@@ -27,17 +27,22 @@ final class WordCounts {
    */
   static Map<String, Integer> sort(Map<String, Integer> wordCounts, int popularWordCount) {
 
-    // TODO: Reimplement this method using only the Stream API and lambdas and/or method references.
+    //  Reimplement this method using only the Stream API and lambdas and/or method references.
 
-    PriorityQueue<Map.Entry<String, Integer>> sortedCounts =
-        new PriorityQueue<>(wordCounts.size(), new WordCountComparator());
-    sortedCounts.addAll(wordCounts.entrySet());
-    Map<String, Integer> topCounts = new LinkedHashMap<>();
-    for (int i = 0; i < Math.min(popularWordCount, wordCounts.size()); i++) {
-      Map.Entry<String, Integer> entry = sortedCounts.poll();
-      topCounts.put(entry.getKey(), entry.getValue());
-    }
-    return topCounts;
+    Comparator<Map.Entry<String, Integer>> wordCountComparator =
+            Comparator.<Map.Entry<String, Integer>>comparingInt(Map.Entry::getValue)
+                    .reversed()
+                    .thenComparingInt(entry -> -entry.getKey().length())
+                    .thenComparing(Map.Entry::getKey);
+
+    return wordCounts.entrySet()
+            .stream()
+            .sorted(wordCountComparator)
+            .limit(popularWordCount)
+            .collect(
+                    LinkedHashMap::new,
+                    (map, entry) -> map.put(entry.getKey(), entry.getValue()),
+                    LinkedHashMap::putAll);
   }
 
   /**
