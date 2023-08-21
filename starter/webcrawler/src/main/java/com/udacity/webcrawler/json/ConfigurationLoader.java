@@ -35,12 +35,16 @@ public final class ConfigurationLoader {
    * @param reader a Reader pointing to a JSON string that contains crawler configuration.
    * @return a crawler configuration
    */
-  public static CrawlerConfiguration read(Reader reader) throws IOException
-  {
+  public static CrawlerConfiguration read(Reader reader) {
     // This is here to get rid of the unused variable warning.
     Objects.requireNonNull(reader);
     //use of jackson ObjectMapper to json from reader
-    ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.readValue(reader, CrawlerConfiguration.class);
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      return mapper.readValue(reader, CrawlerConfiguration.Builder.class).build();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+      return null;
+    }
   }
 }
