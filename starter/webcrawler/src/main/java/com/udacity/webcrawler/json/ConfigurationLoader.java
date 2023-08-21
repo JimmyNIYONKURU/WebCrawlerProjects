@@ -6,29 +6,37 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
+
 /**
  * A static utility class that loads a JSON configuration file.
  */
+
 @JsonDeserialize(builder = CrawlerConfiguration.Builder.class)
 public final class ConfigurationLoader {
+
   private final Path path;
+
   /**
    * Create a {@link ConfigurationLoader} that loads configuration from the given {@link Path}.
    */
   public ConfigurationLoader(Path path) {
     this.path = Objects.requireNonNull(path);
   }
+
   /**
    * Loads configuration from this {@link ConfigurationLoader}'s path
    *
    * @return the loaded {@link CrawlerConfiguration}.
    */
-  public CrawlerConfiguration load() throws IOException
+  public CrawlerConfiguration load() throws  IOException
   {
     // use of jackson ObjectMapper to read from file
     ObjectMapper objectMapper = new ObjectMapper();
     return objectMapper.readValue(Files.newBufferedReader(path), CrawlerConfiguration.class);
+
+
   }
+
   /**
    * Loads crawler configuration from the given reader.
    *
