@@ -1,4 +1,5 @@
 package com.udacity.webcrawler.json;
+import com.fasterxml.jackson.core.JsonGenerator;
 
 
 import java.io.Writer;
@@ -59,6 +60,7 @@ public final class CrawlResultWriter
     Objects.requireNonNull(writer);
     //
     ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);  // Disable auto-close for the writer
     try
     {
       objectMapper.writeValue(writer, result);
