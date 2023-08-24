@@ -26,9 +26,8 @@ public final class ConfigurationLoader {
    */
   public CrawlerConfiguration load() throws  IOException
   {
-    // use of jackson ObjectMapper to read from file
-    ObjectMapper objectMapper = new ObjectMapper();
-    return objectMapper.readValue(Files.newBufferedReader(path), CrawlerConfiguration.class);
+    Reader reader = Files.newBufferedReader(path);
+    return read(reader);
   }
   /**
    * Loads crawler configuration from the given reader.
@@ -50,4 +49,3 @@ public final class ConfigurationLoader {
     }
   }
 }
-
