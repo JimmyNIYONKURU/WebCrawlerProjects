@@ -11,7 +11,8 @@ import java.util.Objects;
  * A static utility class that loads a JSON configuration file.
  */
 @JsonDeserialize(builder = CrawlerConfiguration.Builder.class)
-public final class ConfigurationLoader {
+public final class ConfigurationLoader
+{
   private final Path path;
   /**
    * Create a {@link ConfigurationLoader} that loads configuration from the given {@link Path}.
