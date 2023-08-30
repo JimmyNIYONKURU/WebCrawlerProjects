@@ -8,7 +8,8 @@ import java.util.List;
 /**
  * The main interface that defines the web crawler API.
  */
-public interface WebCrawler {
+public interface WebCrawler
+{
 
   /**
    * Starts a crawl at the given URLs.
@@ -22,7 +23,8 @@ public interface WebCrawler {
   /**
    * Returns the maximum amount of parallelism (number of CPU cores) supported by this web crawler.
    */
-  default int getMaxParallelism() {
+  default int getMaxParallelism()
+  {
     return 1;
   }
 }

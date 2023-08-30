@@ -52,7 +52,8 @@ final class SequentialWebCrawler implements WebCrawler {
       crawlInternal(url, deadline, maxDepth, counts, visitedUrls);
     }
 
-    if (counts.isEmpty()) {
+    if (counts.isEmpty())
+    {
       return new CrawlResult.Builder()
           .setWordCounts(counts)
           .setUrlsVisited(visitedUrls.size())
@@ -71,23 +72,30 @@ final class SequentialWebCrawler implements WebCrawler {
       int maxDepth,
       Map<String, Integer> counts,
       Set<String> visitedUrls) {
-    if (maxDepth == 0 || clock.instant().isAfter(deadline)) {
+    if (maxDepth == 0 || clock.instant().isAfter(deadline))
+    {
       return;
     }
-    for (Pattern pattern : ignoredUrls) {
-      if (pattern.matcher(url).matches()) {
+    for (Pattern pattern : ignoredUrls)
+    {
+      if (pattern.matcher(url).matches())
+      {
         return;
       }
     }
-    if (visitedUrls.contains(url)) {
+    if (visitedUrls.contains(url))
+    {
       return;
     }
     visitedUrls.add(url);
     PageParser.Result result = parserFactory.get(url).parse();
-    for (Map.Entry<String, Integer> e : result.getWordCounts().entrySet()) {
-      if (counts.containsKey(e.getKey())) {
+    for (Map.Entry<String, Integer> e : result.getWordCounts().entrySet())
+    {
+      if (counts.containsKey(e.getKey()))
+      {
         counts.put(e.getKey(), e.getValue() + counts.get(e.getKey()));
-      } else {
+      } else
+      {
         counts.put(e.getKey(), e.getValue());
       }
     }
