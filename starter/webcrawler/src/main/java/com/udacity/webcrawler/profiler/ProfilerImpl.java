@@ -1,14 +1,16 @@
 package com.udacity.webcrawler.profiler;
 
-import javax.inject.Inject;
 import java.io.IOException;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.Clock;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-
-import static java.time.format.DateTimeFormatter.RFC_1123_DATE_TIME;
+import java.lang.reflect;
 
 /**
  * Concrete implementation of the {@link Profiler}.
@@ -19,7 +21,6 @@ final class ProfilerImpl implements Profiler {
   private final ProfilingState state = new ProfilingState();
   private final ZonedDateTime startTime;
 
-  @Inject
   ProfilerImpl(Clock clock) {
     this.clock = Objects.requireNonNull(clock);
     this.startTime = ZonedDateTime.now(clock);
@@ -28,18 +29,21 @@ final class ProfilerImpl implements Profiler {
   @Override
   public <T> T wrap(Class<T> klass, T delegate) {
     Objects.requireNonNull(klass);
+    Objects.requireNonNull(delegate);
 
-    // TODO: Use a dynamic proxy (java.lang.reflect.Proxy) to "wrap" the delegate in a
-    //       ProfilingMethodInterceptor and return a dynamic proxy from this method.
-    //       See https://docs.oracle.com/javase/10/docs/api/java/lang/reflect/Proxy.html.
+    ClassLoader classLoader = klass.getClassLoader();
+    Class<?>[] interfaces = {klass};
 
-    return delegate;
+    InvocationHandler handler = new ProfilingMethodInterceptor(clock, delegate, state);
+
+    return (T) java.lang.reflect.Proxy.newProxyInstance(classLoader, interfaces, handler);
   }
 
   @Override
-  public void writeData(Path path) {
-    // TODO: Write the ProfilingState data to the given file path. If a file already exists at that
-    //       path, the new data should be appended to the existing file.
+  public void writeData(Path path) throws IOException {
+    try (Writer writer = Files.newBufferedWriter(path, StandardCharsets.UTF_8, StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+      writeData(writer);
+    }
   }
 
   @Override
@@ -49,4 +53,7 @@ final class ProfilerImpl implements Profiler {
     state.write(writer);
     writer.write(System.lineSeparator());
   }
+
+  private static final DateTimeFormatter RFC_1123_DATE_TIME = DateTimeFormatter.RFC_1123_DATE_TIME;
 }
+

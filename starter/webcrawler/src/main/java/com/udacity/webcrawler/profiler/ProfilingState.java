@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 /**
  * Helper class that records method performance data from the method interceptor.
  */
-final class ProfilingState {
+final class ProfilingState
+{
   private final Map<String, Duration> data = new ConcurrentHashMap<>();
 
   /**
@@ -23,7 +24,8 @@ final class ProfilingState {
    * @param method       the method that was called.
    * @param elapsed      the amount of time that passed while the method was called.
    */
-  void record(Class<?> callingClass, Method method, Duration elapsed) {
+  void record(Class<?> callingClass, Method method, Duration elapsed)
+  {
     Objects.requireNonNull(callingClass);
     Objects.requireNonNull(method);
     Objects.requireNonNull(elapsed);
@@ -52,7 +54,8 @@ final class ProfilingState {
 
     // We have to use a for-loop here instead of a Stream API method because Writer#write() can
     // throw an IOException, and lambdas are not allowed to throw checked exceptions.
-    for (String entry : entries) {
+    for (String entry : entries)
+    {
       writer.write(entry);
     }
   }
@@ -64,14 +67,16 @@ final class ProfilingState {
    * @param method       the Java method that was invoked.
    * @return a string representation of the method call.
    */
-  private static String formatMethodCall(Class<?> callingClass, Method method) {
+  private static String formatMethodCall(Class<?> callingClass, Method method)
+  {
     return String.format("%s#%s", callingClass.getName(), method.getName());
   }
 
   /**
    * Formats the given {@link Duration} for writing to a text file.
    */
-  private static String formatDuration(Duration duration) {
+  private static String formatDuration(Duration duration)
+  {
     return String.format(
         "%sm %ss %sms", duration.toMinutes(), duration.toSecondsPart(), duration.toMillisPart());
   }

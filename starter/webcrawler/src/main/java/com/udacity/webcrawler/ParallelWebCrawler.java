@@ -61,7 +61,8 @@ final class ParallelWebCrawler implements WebCrawler
   {
     return Runtime.getRuntime().availableProcessors();
   }
-  private class CrawlTask extends RecursiveAction {
+  private class CrawlTask extends RecursiveAction
+  {
     private final String url;
     private final Instant deadline;
     private final int currentDepth;

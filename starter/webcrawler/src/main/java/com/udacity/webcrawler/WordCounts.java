@@ -55,13 +55,17 @@ final class WordCounts {
    *   <li>Finally, breaking ties using alphabetical order.</li>
    * </ol>
    */
-  private static final class WordCountComparator implements Comparator<Map.Entry<String, Integer>> {
+  private static final class WordCountComparator implements Comparator<Map.Entry<String, Integer>>
+  {
     @Override
-    public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b) {
-      if (!a.getValue().equals(b.getValue())) {
+    public int compare(Map.Entry<String, Integer> a, Map.Entry<String, Integer> b)
+    {
+      if (!a.getValue().equals(b.getValue()))
+      {
         return b.getValue() - a.getValue();
       }
-      if (a.getKey().length() != b.getKey().length()) {
+      if (a.getKey().length() != b.getKey().length())
+      {
         return b.getKey().length() - a.getKey().length();
       }
       return a.getKey().compareTo(b.getKey());

@@ -10,7 +10,8 @@ import java.nio.file.Path;
  * <p>The profiler aggregates information about profiled method calls, and how long they took. The
  * aggregate information can then be written to a file with {@link #writeData(Writer) writeData}.
  */
-public interface Profiler {
+public interface Profiler
+{
 
   /**
    * Wraps the given delegate to have its methods profiled.
