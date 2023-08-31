@@ -21,6 +21,7 @@ final class ProfilerImpl implements Profiler {
   private final ProfilingState state = new ProfilingState();
   private final ZonedDateTime startTime;
 
+
   ProfilerImpl(Clock clock) {
     this.clock = Objects.requireNonNull(clock);
     this.startTime = ZonedDateTime.now(clock);
