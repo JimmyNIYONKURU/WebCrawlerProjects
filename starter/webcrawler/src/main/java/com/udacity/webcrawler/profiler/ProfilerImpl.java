@@ -10,7 +10,7 @@ import java.time.Clock;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.lang.reflect;
+import java.lang.reflect.InvocationHandler;
 
 /**
  * Concrete implementation of the {@link Profiler}.
