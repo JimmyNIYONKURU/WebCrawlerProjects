@@ -15,6 +15,8 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.nio.file.Path;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Objects;
 
 public final class WebCrawlerMain {
@@ -49,7 +51,18 @@ public final class WebCrawlerMain {
       resultWriter.write(Path.of(resultFilePath));
     }
 
-    // TODO: Write the profile data to a text file (or System.out if the file name is empty)
+    // Write the profile data to a text file (or System.out if the file name is empty)
+    String profileOutputPath = config.getProfileOutputPath();
+    if (!profileOutputPath.isEmpty())
+    {
+      try (Writer profileWriter = Files.newBufferedWriter(Path.of(profileOutputPath)))
+      {
+        profiler.writeData(profileWriter);
+      } catch (IOException e)
+      {
+        System.err.println("Error writing profile data: " + e.getMessage());
+      }
+    }
   }
 
   public static void main(String[] args) throws Exception {
