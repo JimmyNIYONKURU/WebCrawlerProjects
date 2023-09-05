@@ -17,6 +17,7 @@ import java.io.Writer;
 import java.nio.file.Path;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.Objects;
 
 public final class WebCrawlerMain {
@@ -53,13 +54,10 @@ public final class WebCrawlerMain {
 
     // Write the profile data to a text file (or System.out if the file name is empty)
     String profileOutputPath = config.getProfileOutputPath();
-    if (!profileOutputPath.isEmpty())
-    {
-      try (Writer profileWriter = Files.newBufferedWriter(Path.of(profileOutputPath)))
-      {
+    if (!profileOutputPath.isEmpty()) {
+      try (Writer profileWriter = Files.newBufferedWriter(Path.of(profileOutputPath), StandardOpenOption.APPEND)) {
         profiler.writeData(profileWriter);
-      } catch (IOException e)
-      {
+      } catch (IOException e) {
         System.err.println("Error writing profile data: " + e.getMessage());
       }
     }
