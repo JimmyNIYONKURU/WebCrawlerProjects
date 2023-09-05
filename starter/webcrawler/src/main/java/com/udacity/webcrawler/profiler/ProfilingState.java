@@ -25,6 +25,7 @@ final class ProfilingState
    * @param elapsed      the amount of time that passed while the method was called.
    */
   void record(Class<?> callingClass, Method method, Duration elapsed)
+
   {
     Objects.requireNonNull(callingClass);
     Objects.requireNonNull(method);
