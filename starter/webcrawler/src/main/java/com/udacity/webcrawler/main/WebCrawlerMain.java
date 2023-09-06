@@ -8,6 +8,8 @@ import com.udacity.webcrawler.json.CrawlResultWriter;
 import com.udacity.webcrawler.json.CrawlerConfiguration;
 import com.udacity.webcrawler.profiler.Profiler;
 import com.udacity.webcrawler.profiler.ProfilerModule;
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -43,11 +45,23 @@ public final class WebCrawlerMain {
     }
     // Write the profile data to a text file (or System.out if the file name is empty)
     String profileOutputPath = config.getProfileOutputPath();
-    if (!profileOutputPath.isEmpty()) {
-      try (Writer profileWriter = Files.newBufferedWriter(Path.of(profileOutputPath), StandardOpenOption.CREATE, StandardOpenOption.APPEND)) {
+    if (!profileOutputPath.isEmpty())
+    {
+      try (Writer profileWriter = Files.newBufferedWriter(Path.of(profileOutputPath), StandardOpenOption.CREATE, StandardOpenOption.APPEND))
+      {
         profiler.writeData(profileWriter);
-      } catch (IOException e) {
+      } catch (IOException e)
+      {
         System.err.println("Error writing profile data: " + e.getMessage());
+      }
+    }
+    else
+    {
+
+      try (PrintWriter profileWriter = new PrintWriter(System.out))
+      {
+        System.out.println();
+        profiler.writeData(profileWriter);
       }
     }
   }
