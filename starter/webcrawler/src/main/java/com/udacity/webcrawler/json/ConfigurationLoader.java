@@ -27,8 +27,11 @@ public final class ConfigurationLoader
    */
   public CrawlerConfiguration load() throws  IOException
   {
-    Reader reader = Files.newBufferedReader(path);
-    return read(reader);
+    try (Reader reader = Files.newBufferedReader(path))
+    {
+      return read(reader);
+    }
+
   }
   /**
    * Loads crawler configuration from the given reader.
@@ -42,7 +45,8 @@ public final class ConfigurationLoader
     //use of jackson ObjectMapper to json from reader
     ObjectMapper mapper = new ObjectMapper();
     mapper.disable(JsonParser.Feature.AUTO_CLOSE_SOURCE);
-    try {
+    try
+    {
       return mapper.readValue(reader, CrawlerConfiguration.Builder.class).build();
     } catch (Exception ex) {
       ex.printStackTrace();

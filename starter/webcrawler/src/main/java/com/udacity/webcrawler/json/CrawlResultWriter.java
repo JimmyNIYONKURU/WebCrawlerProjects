@@ -39,12 +39,10 @@ public final class CrawlResultWriter
     //
     ObjectMapper objectMapper = new ObjectMapper();
     String jsonResult = objectMapper.writeValueAsString(result);
-    try
-    {
-      Files.write(path, jsonResult.getBytes(), Files.exists(path) ? java.nio.file.StandardOpenOption.APPEND : java.nio.file.StandardOpenOption.CREATE);
-    }
-    catch(java.io.IOException e)
-    {
+
+    try {
+      Files.write(path, jsonResult.getBytes(), Files.exists(path) ? StandardOpenOption.APPEND : StandardOpenOption.CREATE);
+    } catch (IOException e) {
       e.printStackTrace();
     }
   }
