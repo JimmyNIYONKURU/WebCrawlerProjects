@@ -88,7 +88,7 @@ java -classpath target/udacity-webcrawler-1.0.jar \
 ## Built With
 
 
-Before continuing to the next section, take a brief moment to appreciate all the third-party Java libraries you used. Each of these projects represents many, many hours spent by other  developers to create useful software that you were able to utilize to build your web crawler.
+A brief moment to appreciate all the third-party Java libraries used. 
 
 * [jsoup](https://jsoup.org/) - An open-source Java library for working with HTML.
   * License: [MIT License](https://jsoup.org/license)
